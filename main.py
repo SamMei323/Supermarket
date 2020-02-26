@@ -4,9 +4,12 @@ from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
 import ast
 import os
+import time
 
+t0 = time.time()
 # create list of paknsave catergories
 categories = ['drinks','fresh-foods-and-bakery','chilled-frozen-and-desserts','pantry','drinks','beer-cider-and-wine','personal-care','baby-toddler-and-kids','pets','kitchen-dining-and-household']
+# categories = ['drinks']
 
 # initialize empty lists to store data
 productName = []
@@ -15,6 +18,7 @@ category = []
 image = []
 pricingUnit= []
 productId = []
+quantity = []
 
 for cat in categories:
 ###
@@ -39,14 +43,21 @@ for cat in categories:
             dataOptions = dataOptions.replace("\r","").replace("\n","").replace(" ","").replace("false","0").replace("true","0")
             productDetails = eval(dataOptions)['ProductDetails']
 
+            category.append(cat)
             productId.append(eval(dataOptions)['productId'])
             unitPrice.append(float(productDetails["PricePerItem"]))
             productName.append(a.find('h3',attrs={'class':"u-p2"}).text.replace('\n','').replace('\r',''))
             pricingUnit.append(productDetails['PriceMode'])
-            image.append(a.find('div',attrs={'class','fs-product-card__product-image'})['style'])
+            image.append(a.find('div',attrs={'class','fs-product-card__product-image'})['style'].replace("background-image: url('","").replace("')",""))
+            quantity.append(a.find('p',attrs={'class','u-color-half-dark-grey u-p3'}).text)
 
-df = pd.DataFrame({'productName':productName,'pricingUnit':pricingUnit,'unitPrice':unitPrice})
-
-print(df.head())
-print(df.tail())
-df.to_csv(os.path.expanduser("~/Desktop/SupermarketData/paknsave_allproducts.csv"),index=False)
+    df = pd.DataFrame({'productId':productId,'productName':productName,'category':category,'quantity':quantity,'pricingUnit':pricingUnit,'unitPrice':unitPrice,'image':image})
+    df.to_csv(os.path.expanduser("~/Desktop/SupermarketData/paknsave_"+cat+".csv"),index=False)
+    productName = []
+    unitPrice = []
+    category = []
+    image = []
+    pricingUnit= []
+    productId = []
+    quantity=[]
+print("Total Execution Time: " + str((time.time()-t0)/60) + " minutes")
