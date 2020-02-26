@@ -60,4 +60,5 @@ for cat in categories:
     pricingUnit= []
     productId = []
     quantity=[]
+    
 print("Total Execution Time: " + str((time.time()-t0)/60) + " minutes")
