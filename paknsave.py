@@ -8,7 +8,8 @@ import time
 
 t0 = time.time()
 # create list of paknsave catergories
-categories = ['drinks','fresh-foods-and-bakery','chilled-frozen-and-desserts','pantry','drinks','beer-cider-and-wine','personal-care','baby-toddler-and-kids','pets','kitchen-dining-and-household']
+categories = ['drinks','fresh-foods-and-bakery','chilled-frozen-and-desserts','pantry','drinks','beer-cider-and-wine','personal-care',
+'baby-toddler-and-kids','pets','kitchen-dining-and-household']
 # categories = ['drinks']
 
 # initialize empty lists to store data
