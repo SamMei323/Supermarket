@@ -6,6 +6,7 @@ import ast
 import os
 import time
 from selenium import webdriver
+
 t0 = time.time()
 ###########
 
@@ -25,7 +26,10 @@ categories = ['bakery','deli-chilled-foods','easter','fruit-vegetables','meat','
 'chocolate-sweets-snacks','cleaning-homecare','clothing-manchester','drinks-hot-cold','frozen-foods','health-wellness','home-kitchenware',
 'liquor-beer-cider','liquor-wine','meal-ingredients','office-entertainment','personal-care','pet-care','toys-party-needs']
 
-
+categories = ['deli-chilled-foods','easter','fruit-vegetables','meat','seafood',
+'baby-care','baking-cooking','biscuits-crackers','breakfast-foods','canned-prepared-foods',
+'chocolate-sweets-snacks','cleaning-homecare','clothing-manchester','drinks-hot-cold','frozen-foods','health-wellness','home-kitchenware',
+'liquor-beer-cider','liquor-wine','meal-ingredients','office-entertainment','personal-care','pet-care','toys-party-needs']
 
 for cat in categories:
     driver = webdriver.Chrome("/usr/local/bin/chromedriver")
@@ -61,6 +65,14 @@ for cat in categories:
 
     df = pd.DataFrame({'category':category,'productId':productId,'productName':productName,'packageType':packageType,'volumeSize':volumeSize,'pricingUnit':pricingUnit,'unitPrice':unitPrice,'image':image})
     df.to_csv(os.path.expanduser("~/Desktop/SupermarketData/Countdown/countdown_"+cat+".csv"),index=False)
+    productName = []
+    unitPrice = []
+    category = []
+    image = []
+    pricingUnit= []
+    productId = []
+    packageType= []
+    volumeSize = []
 
 # driver.quit()
 ###########
